@@ -33,7 +33,7 @@ jobs:
           file: infra/Dockerfile
           push: true
           secrets: |
-            nuget_token=${{ secrets.GITHUB_TOKEN }}
+            nuget_token=${{ secrets.NUGET_PAT }}
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
