@@ -130,12 +130,9 @@ try
     await db.Database.EnsureCreatedAsync();
 
     // Seed data only in development
-    if (app.Environment.IsDevelopment())
-    {
-        var csvPath = Path.GetFullPath(Path.Combine(app.Environment.ContentRootPath, "..", "..", "playstation_lounges_georgia.csv"));
-        if (File.Exists(csvPath))
-            await SeedData.SeedAsync(db, csvPath);
-    }
+    var csvPath = Path.GetFullPath(Path.Combine(app.Environment.ContentRootPath, "..", "..", "playstation_lounges_georgia.csv"));
+    if (File.Exists(csvPath))
+        await SeedData.SeedAsync(db, csvPath);
 
     app.Run();
 }

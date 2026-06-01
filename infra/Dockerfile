@@ -27,5 +27,6 @@ RUN dotnet publish src/GameBook.Api/GameBook.Api.csproj -c Release -o /app
 FROM mcr.microsoft.com/dotnet/aspnet:9.0
 WORKDIR /app
 COPY --from=build /app .
+COPY --from=build /src/playstation_lounges_georgia.csv /playstation_lounges_georgia.csv
 EXPOSE 5080
 ENTRYPOINT ["dotnet", "GameBook.Api.dll"]
