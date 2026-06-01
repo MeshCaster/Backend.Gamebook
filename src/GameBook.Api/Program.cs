@@ -124,13 +124,18 @@ try
     // Health check
     app.MapGet("/health", () => Results.Ok(new { status = "healthy", timestamp = DateTimeOffset.UtcNow }));
 
-    // Seed data in development
+    // Database setup
     using var scope = app.Services.CreateScope();
     var db = scope.ServiceProvider.GetRequiredService<GameBookDbContext>();
     await db.Database.EnsureCreatedAsync();
 
-    var csvPath = Path.GetFullPath(Path.Combine(app.Environment.ContentRootPath, "..", "..", "playstation_lounges_georgia.csv"));
-    await SeedData.SeedAsync(db, csvPath);
+    // Seed data only in development
+    if (app.Environment.IsDevelopment())
+    {
+        var csvPath = Path.GetFullPath(Path.Combine(app.Environment.ContentRootPath, "..", "..", "playstation_lounges_georgia.csv"));
+        if (File.Exists(csvPath))
+            await SeedData.SeedAsync(db, csvPath);
+    }
 
     app.Run();
 }
