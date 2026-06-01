@@ -4,6 +4,12 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <PackageId>MeshCaster.GameBook.Contracts</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>MeshCaster</Authors>
+    <Description>Shared contracts (DTOs/requests/responses) for the GameBook API</Description>
+    <RepositoryUrl>https://github.com/MeshCaster/Backend.Gamebook</RepositoryUrl>
   </PropertyGroup>
 
 </Project>

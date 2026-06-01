@@ -3,6 +3,8 @@ services:
     image: ghcr.io/meshcaster/backend.gamebook:latest
     container_name: gamebook-api
     restart: unless-stopped
+    env_file:
+      - .env
     environment:
       ASPNETCORE_ENVIRONMENT: Production
       ASPNETCORE_URLS: "http://+:5080"

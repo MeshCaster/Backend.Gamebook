@@ -4,7 +4,7 @@
     <ProjectReference Include="..\GameBook.Application\GameBook.Application.csproj" />
     <ProjectReference Include="..\GameBook.Infrastructure\GameBook.Infrastructure.csproj" />
     <ProjectReference Include="..\GameBook.Contracts\GameBook.Contracts.csproj" />
-    <ProjectReference Include="..\..\..\Meshcaster.IdentityProvider\src\Meshcaster.IdentityProvider\Meshcaster.IdentityProvider.csproj" />
+    <PackageReference Include="Meshcaster.IdentityProvider" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>

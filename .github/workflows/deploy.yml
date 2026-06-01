@@ -32,6 +32,8 @@ jobs:
           context: .
           file: infra/Dockerfile
           push: true
+          build-args: |
+            NUGET_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN }}
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}

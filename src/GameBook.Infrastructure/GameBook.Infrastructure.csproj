@@ -3,7 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\GameBook.Application\GameBook.Application.csproj" />
     <ProjectReference Include="..\GameBook.Domain\GameBook.Domain.csproj" />
-    <ProjectReference Include="..\..\..\Meshcaster.IdentityProvider\src\Meshcaster.IdentityProvider\Meshcaster.IdentityProvider.csproj" />
+    <PackageReference Include="Meshcaster.IdentityProvider" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
