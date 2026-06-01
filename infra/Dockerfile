@@ -1,7 +1,7 @@
+# syntax=docker/dockerfile:1
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
-ARG NUGET_AUTH_TOKEN
 COPY Directory.Build.props .
 COPY nuget.config .
 COPY GameBook.sln .
@@ -10,7 +10,16 @@ COPY src/GameBook.Application/GameBook.Application.csproj src/GameBook.Applicati
 COPY src/GameBook.Domain/GameBook.Domain.csproj src/GameBook.Domain/
 COPY src/GameBook.Infrastructure/GameBook.Infrastructure.csproj src/GameBook.Infrastructure/
 COPY src/GameBook.Contracts/GameBook.Contracts.csproj src/GameBook.Contracts/
-RUN dotnet nuget update source MeshCaster --username "meshcaster" --password "${NUGET_AUTH_TOKEN}" --store-password-in-clear-text --configfile nuget.config && dotnet restore
+COPY tests/GameBook.Application.UnitTests/GameBook.Application.UnitTests.csproj tests/GameBook.Application.UnitTests/
+COPY tests/GameBook.Api.IntegrationTests/GameBook.Api.IntegrationTests.csproj tests/GameBook.Api.IntegrationTests/
+COPY tests/GameBook.Architecture.Tests/GameBook.Architecture.Tests.csproj tests/GameBook.Architecture.Tests/
+RUN --mount=type=secret,id=nuget_token \
+    dotnet nuget update source MeshCaster \
+      --username "meshcaster" \
+      --password "$(cat /run/secrets/nuget_token)" \
+      --store-password-in-clear-text \
+      --configfile nuget.config \
+    && dotnet restore
 
 COPY . .
 RUN dotnet publish src/GameBook.Api/GameBook.Api.csproj -c Release -o /app
