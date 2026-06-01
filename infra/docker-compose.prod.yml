@@ -8,28 +8,10 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Production
       ASPNETCORE_URLS: "http://+:5080"
-      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=gamebook;Username=gamebook;Password=${DB_PASSWORD}"
+      ConnectionStrings__DefaultConnection: "${DATABASE_URL}"
     depends_on:
-      postgres:
-        condition: service_healthy
       redis:
         condition: service_healthy
-
-  postgres:
-    image: postgres:16-alpine
-    container_name: gamebook-postgres
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: gamebook
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: gamebook
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U gamebook"]
-      interval: 5s
-      timeout: 3s
-      retries: 5
 
   redis:
     image: redis:7-alpine
@@ -65,7 +47,6 @@ services:
       - certbot-var:/var/www/certbot
 
 volumes:
-  pgdata:
   redisdata:
   certbot-etc:
   certbot-var:
