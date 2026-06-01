@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <ProjectReference Include="..\GameBook.Application\GameBook.Application.csproj" />
+    <ProjectReference Include="..\GameBook.Infrastructure\GameBook.Infrastructure.csproj" />
+    <ProjectReference Include="..\GameBook.Contracts\GameBook.Contracts.csproj" />
+    <ProjectReference Include="..\..\..\Meshcaster.IdentityProvider\src\Meshcaster.IdentityProvider\Meshcaster.IdentityProvider.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DotNetEnv" Version="3.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.StackExchangeRedis" Version="9.*" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.16">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="NSwag.AspNetCore" Version="14.7.1" />
+    <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+</Project>

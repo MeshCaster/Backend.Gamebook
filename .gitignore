@@ -1,0 +1,28 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+publish/
+out/
+
+## IDE
+.idea/
+.vs/
+*.swp
+*~
+
+## OS
+.DS_Store
+Thumbs.db
+
+## Secrets
+.env
+appsettings.*.local.json
+*.pfx
+*.p12
+
+## Misc
+*.csv

@@ -1,0 +1,71 @@
+services:
+  gamebook-api:
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile
+    container_name: gamebook-api
+    restart: unless-stopped
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: "http://+:5080"
+      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=gamebook;Username=gamebook;Password=${DB_PASSWORD}"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: gamebook-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: gamebook
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: gamebook
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gamebook"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: gamebook-redis
+    restart: unless-stopped
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  nginx:
+    image: nginx:alpine
+    container_name: gamebook-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - certbot-etc:/etc/letsencrypt:ro
+      - certbot-var:/var/www/certbot:ro
+    depends_on:
+      - gamebook-api
+
+  certbot:
+    image: certbot/certbot
+    container_name: gamebook-certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/www/certbot
+
+volumes:
+  pgdata:
+  redisdata:
+  certbot-etc:
+  certbot-var:
