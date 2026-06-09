@@ -20,6 +20,7 @@ public static class DependencyInjection
             {
                 npgsql.UseNetTopologySuite();
                 npgsql.MigrationsAssembly(typeof(GameBookDbContext).Assembly.FullName);
+                npgsql.EnableRetryOnFailure(3);
             }));
 
         services.AddScoped<IGameBookDbContext>(sp => sp.GetRequiredService<GameBookDbContext>());
