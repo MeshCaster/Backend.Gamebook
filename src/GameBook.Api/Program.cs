@@ -116,6 +116,7 @@ try
     app.MapUserEndpoints();
     app.MapReviewEndpoints();
     app.MapWebhookEndpoints();
+    app.MapVapiEndpoints();
 
     // SignalR hubs
     app.MapHub<VenueHub>("/hubs/venue");
